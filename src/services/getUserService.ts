@@ -1,3 +1,4 @@
+import Encript from "../infra/encript/bycrypt"
 import userRepository from "../infra/repository/userRepository"
 
 
@@ -10,12 +11,18 @@ type CreateUserRequest = {
 
   class getUserServices {
     constructor (
-        private readonly userRepository : userRepository
+        private readonly userRepository : userRepository,
+        private readonly encript:Encript
     ){}
 
-    async login(email: string, passoword: string): Promise<CreateUserRequest|null> {
+    async login(email: string, password: string): Promise<CreateUserRequest|null> {
         const user = await this.userRepository.getUserByEmail(email)
-        return user
+        if (user){
+          const isMath = await this.encript.comparePassword(password, user.password)
+          return isMath? user:null
+          
+        }
+        return null
     }
   }
 
