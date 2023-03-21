@@ -9,7 +9,7 @@ type CreateUserRequest = {
   }
 
 
-  class getUserServices {
+  class GetUserServices {
     constructor (
         private readonly userRepository : userRepository,
         private readonly encript:Encript
@@ -26,4 +26,4 @@ type CreateUserRequest = {
     }
   }
 
-  export default getUserServices
+  export default GetUserServices

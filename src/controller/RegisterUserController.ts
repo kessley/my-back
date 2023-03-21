@@ -11,6 +11,7 @@ class RegisterUserController {
         if (!email) return response.status(400).send("Need to pass a email valid")
         if (!password) return response.status(400).send("Need to pass a password valid")
         this.registerUserService.registerUser(email, username, password)
+        response.status(200).send('register')
     }
 
 }

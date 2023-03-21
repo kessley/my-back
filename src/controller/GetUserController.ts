@@ -1,13 +1,17 @@
 import { Request, Response } from "express";
-import getUserServices from "../services/getUserService";
+import GetUserServices from "../services/GetUserService";
 
 
 class GetUSerController {
-    constructor(private readonly getUserService:getUserServices){}
+    constructor(
+        private readonly getUserService:GetUserServices
+    ){}
     
-    login(req:Request, res: Response){
-        const {email,  passoword} = req.body
-        const user = this.getUserService.login(email, passoword)
+    async login(req:Request, res: Response){
+        const {email,  password} = req.body
+        if (!email) return res.status(400).send("Need to pass a email valid")
+        if (!password) return res.status(400).send("Need to pass a password valid")
+        const user = await this.getUserService.login(email, password)
         return res.status(201).json(user)
     }
 }
